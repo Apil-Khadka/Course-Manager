@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,9 @@ class QuizFactory extends Factory
     {
         return [
             //
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'lesson_id' => $this->faker->numberBetween(1, 100),
         ];
     }
 }

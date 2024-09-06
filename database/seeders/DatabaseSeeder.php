@@ -23,7 +23,13 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(22)->create();
 
-        $this->call(CourseSeeder::class);
-        $this->call(LessonSeeder::class);
+        $this->call([
+            CourseSeeder::class,
+            LessonSeeder::class,
+            QuizSeeder::class,
+            QuestionSeeder::class,
+            OptionSeeder::class,
+            ResultSeeder::class
+        ]);
     }
 }

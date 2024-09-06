@@ -21,10 +21,10 @@ class LessonFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
-            'course_id' => Course::factory(),
+            'course_id' => $this->faker->numberBetween(1, 22),
             'created_by' => 1,
             'updated_by' => 1,
-            'assigned_to' => User::factory(),
+            'assigned_to' => $this->faker->numberBetween(2, 21),
         ];
     }
 }

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreQuizRequest extends FormRequest
+class UpdateOptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user()->admin;
+        return false;
     }
 
     /**
@@ -23,9 +23,6 @@ class StoreQuizRequest extends FormRequest
     {
         return [
             //
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'lesson_id' => ['required', 'integer', 'exists:lessons,id'],
         ];
     }
 }

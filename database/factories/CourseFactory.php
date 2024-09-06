@@ -23,7 +23,7 @@ class CourseFactory extends Factory
             'course_code' => $this->faker->unique()->word,
             'created_by' => 1,
             'updated_by' => 1,
-            'assigned_to' => User::factory(),
+            'assigned_to' => $this->faker->numberBetween(2, 22),
         ];
     }
 }
