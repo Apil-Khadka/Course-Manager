@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuizRequest;
 use App\Http\Requests\UpdateQuizRequest;
+use App\Http\Resources\QuizResource;
 use App\Models\Quiz;
 
 class QuizController extends Controller
@@ -13,7 +14,9 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        $quizzes = Quiz::all();
+
+        return QuizResource::collection($quizzes);
     }
 
     /**
@@ -21,7 +24,7 @@ class QuizController extends Controller
      */
     public function create()
     {
-        //
+        // TODO:: Implement create
     }
 
     /**
@@ -29,7 +32,8 @@ class QuizController extends Controller
      */
     public function store(StoreQuizRequest $request)
     {
-        //
+        $quiz = Quiz::create($request->validated());
+        return new QuizResource($quiz);
     }
 
     /**
@@ -37,7 +41,7 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        //
+        return new QuizResource($quiz);
     }
 
     /**
@@ -45,7 +49,7 @@ class QuizController extends Controller
      */
     public function edit(Quiz $quiz)
     {
-        //
+        // TODO:: Implement edit
     }
 
     /**
@@ -53,7 +57,8 @@ class QuizController extends Controller
      */
     public function update(UpdateQuizRequest $request, Quiz $quiz)
     {
-        //
+        $quiz->update($request->validated());
+        return new QuizResource($quiz);
     }
 
     /**
@@ -61,6 +66,7 @@ class QuizController extends Controller
      */
     public function destroy(Quiz $quiz)
     {
-        //
+        $quiz->destroy();
+        return response()->noContext;
     }
 }
