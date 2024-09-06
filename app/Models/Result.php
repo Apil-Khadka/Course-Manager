@@ -16,6 +16,11 @@ class Result extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class);
+    }
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
     }
 }

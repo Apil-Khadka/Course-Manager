@@ -14,8 +14,15 @@ class Lesson extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function questions()
+    public function users()
     {
-        return $this->hasMany(Question::class);
+        return $this
+            ->belongsToMany(User::class, 'lesson_user')
+            ->withTimestamps();
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 }

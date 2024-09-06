@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,15 +23,18 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('YouGotGuts'),
             'admin' => true,
         ]);
+        $this->call(CourseSeeder::class);
         User::factory(22)->create();
-
         $this->call([
-            CourseSeeder::class,
+            // CourseSeeder::class,
             LessonSeeder::class,
             QuizSeeder::class,
             QuestionSeeder::class,
             OptionSeeder::class,
             ResultSeeder::class
         ]);
+
+        User::factory()->create()->courses()->attach(Course::all()->random(3));
+        User::factory()->create()->lessons()->attach(Course::all()->random(3));
     }
 }

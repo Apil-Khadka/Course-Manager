@@ -24,7 +24,6 @@ class LessonFactory extends Factory
             'course_id' => $this->faker->numberBetween(1, 22),
             'created_by' => 1,
             'updated_by' => 1,
-            'assigned_to' => $this->faker->numberBetween(2, 21),
         ];
     }
 }

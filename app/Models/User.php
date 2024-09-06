@@ -47,11 +47,23 @@ class User extends Authenticatable
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class);
+        return $this
+            ->belongsToMany(Course::class, 'course_user')
+            ->withTimestamps();
     }
 
     public function results()
     {
-        return $this->hasMany(Result::class);
+        return $this
+            ->hasMany(Result::class, 'results')
+            ->withPivot('score', 'question_count')
+            ->withTimestamps();
+    }
+
+    public function lessons()
+    {
+        return $this
+            ->belongsToMany(Lesson::class, 'lesson_user')
+            ->withTimestamps();
     }
 }
