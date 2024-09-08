@@ -14,8 +14,12 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
-        return CourseResource::collection($courses);
+        $query = Course::query();
+        $courses = $query->paginate(10);
+
+        return inertia('Course/index', [
+            'courses' => CourseResource::collection($courses),
+        ]);
     }
 
     /**
@@ -38,9 +42,12 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        return new CourseResource($course);
+        $course = Course::with('lessons')->findOrFail($id);
+        return inertia('Course/show', [
+            'course' => new CourseResource($course),
+        ]);
     }
 
     /**
