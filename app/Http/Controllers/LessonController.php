@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
+use Inertia\Inertia;
 
 class LessonController extends Controller
 {
@@ -24,6 +25,7 @@ class LessonController extends Controller
     public function create()
     {
         // TODO: Implement create method
+        return Inertia::render('Lesson/Create');
     }
 
     /**
@@ -32,7 +34,9 @@ class LessonController extends Controller
     public function store(StoreLessonRequest $request)
     {
         $lesson = Lesson::create($request->validated());
-        return new LessonResource($lesson);
+        return redirect()
+            ->route('lessons.create')
+            ->with('success', 'Lesson created successfully');
     }
 
     /**

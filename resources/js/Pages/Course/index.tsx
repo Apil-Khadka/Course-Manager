@@ -8,7 +8,14 @@ export default function Course({ auth, courses }: PageProps<{ courses: any }>) {
     console.log("Courses:", courses);
 
     return (
-        <AuthenticatedLayout user={auth.user} header={<h2>Course</h2>}>
+        <AuthenticatedLayout
+            user={auth.user}
+            header={
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                    Courses
+                </h2>
+            }
+        >
             <Head title="Course" />
             <CourseList />
         </AuthenticatedLayout>

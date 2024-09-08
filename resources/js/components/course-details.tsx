@@ -2,7 +2,7 @@ import React from "react";
 import { usePage, Link } from "@inertiajs/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2, Book } from "lucide-react";
+import { Edit, Trash2, Book, PlusCircle } from "lucide-react";
 import { PageProps as InertiaPageProps } from "@/types";
 
 interface Lesson {
@@ -25,7 +25,9 @@ interface Course {
 }
 
 interface PageProps extends InertiaPageProps {
-    course: Course;
+    course: {
+        data: Course;
+    };
     auth: {
         user: {
             id: number;
@@ -39,6 +41,7 @@ interface PageProps extends InertiaPageProps {
 const CourseDetails: React.FC = () => {
     const { course, auth } = usePage<PageProps>().props;
     const isAdmin = auth.user.admin;
+    const courseData = course.data; // Accessing the actual course data
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("en-US", {
@@ -53,11 +56,11 @@ const CourseDetails: React.FC = () => {
             <Card className="bg-white dark:bg-gray-800 shadow-lg transition-colors duration-200">
                 <CardHeader className="flex flex-row justify-between items-center">
                     <CardTitle className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                        {course.title}
+                        {courseData.title}
                     </CardTitle>
                     {isAdmin && (
                         <div className="space-x-2">
-                            <Link href={route("courses.edit", course.id)}>
+                            <Link href={route("courses.edit", courseData.id)}>
                                 <Button
                                     variant="outline"
                                     size="sm"
@@ -68,7 +71,7 @@ const CourseDetails: React.FC = () => {
                                 </Button>
                             </Link>
                             <Link
-                                href={route("courses.destroy", course.id)}
+                                href={route("courses.destroy", courseData.id)}
                                 method="delete"
                                 as="button"
                             >
@@ -92,15 +95,15 @@ const CourseDetails: React.FC = () => {
                             </h3>
                             <p className="text-gray-600 dark:text-gray-400">
                                 <strong>Course Code:</strong>{" "}
-                                {course.course_code}
+                                {courseData.course_code}
                             </p>
                             <p className="text-gray-600 dark:text-gray-400">
                                 <strong>Description:</strong>{" "}
-                                {course.description}
+                                {courseData.description}
                             </p>
                             <p className="text-gray-600 dark:text-gray-400">
                                 <strong>Assigned To:</strong>{" "}
-                                {course.assigned_to}
+                                {courseData.assigned_to}
                             </p>
                         </div>
                         <div>
@@ -109,33 +112,44 @@ const CourseDetails: React.FC = () => {
                             </h3>
                             <p className="text-gray-600 dark:text-gray-400">
                                 <strong>Created At:</strong>{" "}
-                                {formatDate(course.created_at)}
+                                {formatDate(courseData.created_at)}
                             </p>
                             <p className="text-gray-600 dark:text-gray-400">
                                 <strong>Updated At:</strong>{" "}
-                                {formatDate(course.updated_at)}
+                                {formatDate(courseData.updated_at)}
                             </p>
-                            {isAdmin && course.created_by && (
+                            {isAdmin && courseData.created_by && (
                                 <p className="text-gray-600 dark:text-gray-400">
                                     <strong>Created By:</strong>{" "}
-                                    {course.created_by}
+                                    {courseData.created_by}
                                 </p>
                             )}
-                            {isAdmin && course.updated_by && (
+                            {isAdmin && courseData.updated_by && (
                                 <p className="text-gray-600 dark:text-gray-400">
                                     <strong>Updated By:</strong>{" "}
-                                    {course.updated_by}
+                                    {courseData.updated_by}
                                 </p>
                             )}
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                            Lessons
-                        </h3>
-                        {course.lessons.length > 0 ? (
+                        <div className="flex justify-between items-center mb-6">
+                            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                                Lessons
+                            </h3>
+                            {isAdmin && (
+                                <Link
+                                    href={route("lessons.create")}
+                                    className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
+                                >
+                                    <PlusCircle className="w-5 h-5 mr-2" />
+                                    Create lesson
+                                </Link>
+                            )}
+                        </div>
+                        {courseData.lessons.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {course.lessons.map((lesson) => (
+                                {courseData.lessons.map((lesson) => (
                                     <Card
                                         key={lesson.id}
                                         className="bg-gray-50 dark:bg-gray-700"
