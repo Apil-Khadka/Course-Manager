@@ -18,6 +18,7 @@ class LessonResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
+            'video_url' => $this->video_url,
             'course_id' => $this->course_id,
             'created_by' => $this->when(auth()->user()->admin, $this->created_by),
             'updated_by' => $this->when(auth()->user()->admin, $this->updated_by),

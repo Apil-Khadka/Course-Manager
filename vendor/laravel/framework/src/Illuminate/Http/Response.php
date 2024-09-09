@@ -2,15 +2,15 @@
 
 namespace Illuminate\Http;
 
-use ArrayObject;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Traits\Macroable;
-use InvalidArgumentException;
-use JsonSerializable;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use ArrayObject;
+use InvalidArgumentException;
+use JsonSerializable;
 
 class Response extends SymfonyResponse
 {
@@ -84,10 +84,10 @@ class Response extends SymfonyResponse
     protected function shouldBeJson($content)
     {
         return $content instanceof Arrayable ||
-               $content instanceof Jsonable ||
-               $content instanceof ArrayObject ||
-               $content instanceof JsonSerializable ||
-               is_array($content);
+            $content instanceof Jsonable ||
+            $content instanceof ArrayObject ||
+            $content instanceof JsonSerializable ||
+            is_array($content);
     }
 
     /**
@@ -106,4 +106,9 @@ class Response extends SymfonyResponse
 
         return json_encode($content);
     }
+
+    /**
+     * @param array<string,mixed> $array
+     */
+    public function json(array $array) {}
 }
