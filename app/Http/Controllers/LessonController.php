@@ -36,7 +36,7 @@ class LessonController extends Controller
     {
         $lesson = Lesson::create($request->validated());
         return redirect()
-            ->route('courses.index')
+            ->back()
             ->with('success', 'Lesson created successfully');
     }
 
@@ -53,7 +53,7 @@ class LessonController extends Controller
      */
     public function edit(Lesson $lesson)
     {
-        // TODO: Implement edit
+        return Inertia::render('Lesson/edit', ['lessons' => new LessonResource($lesson)]);
     }
 
     /**
@@ -62,7 +62,9 @@ class LessonController extends Controller
     public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
         $lesson->update($request->validated());
-        return new LessonResource($lesson);
+        return redirect()
+            ->back()
+            ->with('success', 'Lesson updated successfully');
     }
 
     /**
@@ -71,6 +73,7 @@ class LessonController extends Controller
     public function destroy(Lesson $lesson)
     {
         $lesson->delete();
-        return response()->nocontent;
+        return redirect()
+            ->route('courses.show', $lesson->course_id);
     }
 }

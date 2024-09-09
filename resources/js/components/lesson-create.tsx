@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { usePage, useForm } from "@inertiajs/react";
+import { usePage, useForm, Link } from "@inertiajs/react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, Video } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Video } from "lucide-react";
+import DarkModeToggle from "./dark-mode-toggle";
 
 // Interfaces
 
@@ -79,9 +80,18 @@ const LessonCreate: React.FC = () => {
         <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-all duration-300">
             <Card className="max-w-4xl mx-auto bg-white dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden transition-all duration-300 hover:shadow-2xl">
                 <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
-                    <CardTitle className="text-3xl font-bold text-white">
-                        Create New Lesson
-                    </CardTitle>
+                    <div className="flex justify-between items-center">
+                        <Link
+                            href={route("courses.show", course_id)}
+                            className="text-white hover:text-gray-200 transition-colors duration-200"
+                        >
+                            <ArrowLeft className="w-6 h-6" />
+                        </Link>
+                        <CardTitle className="text-3xl font-bold text-white">
+                            Create New Lesson
+                        </CardTitle>
+                        <DarkModeToggle />
+                    </div>
                 </CardHeader>
                 <CardContent className="p-6">
                     {showPreview ? (
@@ -149,7 +159,6 @@ const LessonCreate: React.FC = () => {
                                     </p>
                                 )}
                             </div>
-
                             <div>
                                 <Label
                                     htmlFor="content"
@@ -157,7 +166,7 @@ const LessonCreate: React.FC = () => {
                                 >
                                     Lesson Content
                                 </Label>
-                                <div className="mt-1 bg-white dark:bg-gray-700 rounded-md shadow-sm">
+                                <div className="mt-1 bg-white dark:bg-gray-200 rounded-md shadow-sm">
                                     <ReactQuill
                                         theme="snow"
                                         value={data.content}
@@ -166,7 +175,7 @@ const LessonCreate: React.FC = () => {
                                         }
                                         modules={modules}
                                         formats={formats}
-                                        className="bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md"
+                                        className="bg-white dark:bg-gray-500 text-gray-900 dark:text-gray-100 rounded-md"
                                     />
                                 </div>
                                 {errors.content && (
@@ -175,7 +184,6 @@ const LessonCreate: React.FC = () => {
                                     </p>
                                 )}
                             </div>
-
                             <div>
                                 <Label
                                     htmlFor="video_url"
@@ -198,7 +206,6 @@ const LessonCreate: React.FC = () => {
                                     </p>
                                 )}
                             </div>
-
                             <Button
                                 type="submit"
                                 disabled={processing}

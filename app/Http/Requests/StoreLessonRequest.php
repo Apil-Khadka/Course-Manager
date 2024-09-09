@@ -26,7 +26,7 @@ class StoreLessonRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
             'course_id' => ['required', 'integer', 'exists:courses,id'],
-            'vido_url' => ['nullable', 'string'],
+            'video_url' => ['nullable', 'url', 'string'],
             'created_by' => ['required', 'integer', 'exists:users,id'],
             'updated_by' => ['required', 'integer', 'exists:users,id'],
         ];

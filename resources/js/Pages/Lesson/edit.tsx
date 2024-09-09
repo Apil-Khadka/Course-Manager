@@ -1,4 +1,4 @@
-import LessonView from "@/components/lesson-view";
+import LessonEdit from "@/components/lesson-edit";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
@@ -13,8 +13,8 @@ export default function Course({ auth, lessons }: PageProps<{ lessons: any }>) {
                 </h2>
             }
         >
-            <Head title="Lesson Detail" />
-            <LessonView />
+            <Head title="Edit Lesson" />
+            <LessonEdit />
         </AuthenticatedLayout>
     );
 }

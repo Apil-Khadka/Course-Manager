@@ -1,10 +1,9 @@
-"use client";
-
 import React from "react";
 import { usePage, Link } from "@inertiajs/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Video, Clock, Calendar } from "lucide-react";
+import DeleteButton from "./delete-button";
 
 interface Lesson {
     data: {
@@ -65,6 +64,9 @@ const LessonView: React.FC = () => {
                                 </Button>
                             </Link>
                         )}
+                        <DeleteButton
+                            route={route("lessons.destroy", lesson.id)}
+                        />
                     </div>
                 </CardHeader>
                 <CardContent className="p-6 space-y-6">
