@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Link, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import {
     Card,
     CardContent,
@@ -85,14 +85,6 @@ export function UserData() {
 
     return (
         <div className="container mx-auto p-4">
-            <div>
-                <Link
-                    href={route("courses.show", lesson.course_id)}
-                    className="text-white hover:text-gray-200 transition-colors duration-200"
-                >
-                    <ArrowLeft className="w-6 h-6" />
-                </Link>
-            </div>
             <Card className="mb-6">
                 <CardHeader>
                     <CardTitle className="flex items-center">
