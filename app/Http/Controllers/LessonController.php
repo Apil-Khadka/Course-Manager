@@ -76,4 +76,21 @@ class LessonController extends Controller
         return redirect()
             ->route('courses.show', $lesson->course_id);
     }
+
+    public function assignLessonToUser($userId, $lessonId)
+    {
+        $user = User::findOrFail($userId);
+        $lesson = Lesson::findOrFail($lessonId);
+
+        // Assign the lesson to the user
+        $user->lessons()->attach($lessonId);
+
+        // Automatically assign the course if not already assigned
+        $course = $lesson->course;
+        if (!$user->courses->contains($course->id)) {
+            $user->courses()->attach($course->id);
+        }
+
+        return response()->json(['message' => 'Lesson and course assigned successfully']);
+    }
 }

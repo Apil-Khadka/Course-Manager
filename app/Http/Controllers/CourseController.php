@@ -44,7 +44,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::with('lessons')->findOrFail($id);
+        $course = Course::with('lessons', 'assigned_to')->findOrFail($id);
         return inertia('Course/show', [
             'course' => new CourseResource($course),
         ]);

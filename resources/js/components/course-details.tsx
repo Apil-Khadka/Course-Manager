@@ -11,6 +11,17 @@ interface Lesson {
     description: string;
 }
 
+interface Assigned_to {
+    id: number;
+    name: string;
+    email: string;
+    admin: boolean;
+    pivot: {
+        course_id: number;
+        user_id: number;
+    };
+}
+
 interface Course {
     id: number;
     title: string;
@@ -18,7 +29,7 @@ interface Course {
     course_code: string;
     created_by?: string;
     updated_by?: string;
-    assigned_to: string;
+    assigned_to: Assigned_to[];
     created_at: string;
     updated_at: string;
     lessons: Lesson[];
@@ -101,10 +112,45 @@ const CourseDetails: React.FC = () => {
                                 <strong>Description:</strong>{" "}
                                 {courseData.description}
                             </p>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                <strong>Assigned To:</strong>{" "}
-                                {courseData.assigned_to}
-                            </p>
+                            {isAdmin && (
+                                <p className="text-gray-600 dark:text-gray-400">
+                                    <strong>Assigned To:</strong>{" "}
+                                    {courseData.assigned_to.length > 0 ? (
+                                        courseData.assigned_to.map(
+                                            (assigned_to) => (
+                                                <div
+                                                    key={assigned_to.id}
+                                                    style={{
+                                                        marginBottom: "8px",
+                                                    }}
+                                                >
+                                                    <span>
+                                                        <Link
+                                                            href={route(
+                                                                "user.data",
+                                                                assigned_to.id,
+                                                            )}
+                                                            className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                                                        >
+                                                            {assigned_to.name}{" "}
+                                                        </Link>
+                                                    </span>
+                                                    (
+                                                    <a
+                                                        className="text-black-800 hover:underline hover:text-blue-400"
+                                                        href={`mailto:${assigned_to.email}`}
+                                                    >
+                                                        {assigned_to.email}
+                                                    </a>
+                                                    )
+                                                </div>
+                                            ),
+                                        )
+                                    ) : (
+                                        <p>Not assigned to any user</p>
+                                    )}
+                                </p>
+                            )}
                         </div>
                         <div>
                             <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">

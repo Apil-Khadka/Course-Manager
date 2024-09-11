@@ -18,7 +18,6 @@ export default function Lesson({
         >
             <Head title="Create Lesson" />
         </AuthenticatedLayout> */
-        // <LessonCreate course_id={course_id} auth={auth} />
         <LessonCreate />
     );
 }

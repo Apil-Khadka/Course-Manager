@@ -10,7 +10,7 @@ class Course extends Model
     use HasFactory;
 
     // make relations
-    public function users()
+    public function assigned_to()
     {
         return $this
             ->belongsToMany(User::class, 'course_user')

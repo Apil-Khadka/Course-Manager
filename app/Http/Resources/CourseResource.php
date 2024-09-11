@@ -21,7 +21,7 @@ class CourseResource extends JsonResource
             'course_code' => $this->course_code,
             'created_by' => $this->when(auth()->user()->admin, $this->created_by),
             'updated_by' => $this->when(auth()->user()->admin, $this->updated_by),
-            'assigned_to' => $this->assigned_to,
+            'assigned_to' => $this->whenLoaded('assigned_to'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'lessons' => LessonResource::collection($this->whenLoaded('lessons')),

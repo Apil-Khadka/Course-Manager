@@ -57,7 +57,7 @@ const LessonView: React.FC = () => {
                         {auth.user.admin && (
                             <Link
                                 href={route("lessons.edit", lesson.id)}
-                                className="text-white hover:text-gray-200 transition-colors duration-200"
+                                className="text-black-200 hover:text-black-800 transition-colors duration-200"
                             >
                                 <Button variant="outline" size="sm">
                                     Edit Lesson
