@@ -1,5 +1,4 @@
 import LessonCreate from "@/components/lesson-create";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/inertia-react";
 
@@ -16,8 +15,10 @@ export default function Lesson({
                 </h2>
             }
         >
-            <Head title="Create Lesson" />
         </AuthenticatedLayout> */
-        <LessonCreate />
+        <>
+            <Head title="Create Lesson" />
+            <LessonCreate />
+        </>
     );
 }

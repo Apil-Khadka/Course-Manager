@@ -27,6 +27,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@ai-sdk/openai": "^0.0.60",
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
         "@radix-ui/react-accordion": "^1.2.0",
@@ -38,7 +39,9 @@
         "@tinymce/tinymce-react": "^5.1.1",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
+        "deep-chat-react": "^2.0.1",
         "dompurify": "^3.1.6",
+        "groq-sdk": "^0.7.0",
         "lucide-react": "^0.438.0",
         "react-quill": "^2.0.0",
         "slate-react": "^0.110.0",

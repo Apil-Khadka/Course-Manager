@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ChatBotController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
@@ -19,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', []);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -46,6 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('courses', CourseController::class);
     Route::resource('lessons', LessonController::class);
     Route::resource('quiz', QuizController::class);
+
+    Route::post('/chat/completion', [ChatController::class, 'getChatCompletion']);
 });
 
 require __DIR__ . '/auth.php';

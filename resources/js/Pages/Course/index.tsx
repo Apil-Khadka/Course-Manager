@@ -4,9 +4,6 @@ import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 
 export default function Course({ auth, courses }: PageProps<{ courses: any }>) {
-    console.log("Auth:", auth);
-    console.log("Courses:", courses);
-
     return (
         <AuthenticatedLayout
             user={auth.user}
