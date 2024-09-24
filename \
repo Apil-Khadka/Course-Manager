@@ -27,11 +27,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        // Generate a unique course code
-        $courseCode = $this->generateCourseCode();
-
-        // Return the view with the generated course code
-        return inertia('Course/create', ['course_code' => $courseCode]);
+        // TODO: Implement create method
+        return inertia('Course/create', []);
     }
 
     /**
@@ -39,8 +36,18 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        $course = Course::create($request->validated());
-        return redirect()->route('courses.show', $course->id)->with('success', 'Course created successfully.');
+        // Get the validated data directly from the request
+        $validated = $request->validated();
+
+        // Create a new course with the validated data
+        $course = Course::create([
+            ...$validated,
+            'course_code' => $this->generateCourseCode(),
+            'created_by' => auth()->id(),
+            'updated_by' => auth()->id(),
+        ]);
+        dd($course);
+        // return redirect()->route('courses.show', $course)->with('success', 'Course created successfully.');
     }
 
     private function generateCourseCode()

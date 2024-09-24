@@ -62,11 +62,11 @@ const LessonView: React.FC = () => {
                                 <Button variant="outline" size="sm">
                                     Edit Lesson
                                 </Button>
+                                <DeleteButton
+                                    route={route("lessons.destroy", lesson.id)}
+                                />
                             </Link>
                         )}
-                        <DeleteButton
-                            route={route("lessons.destroy", lesson.id)}
-                        />
                     </div>
                 </CardHeader>
                 <CardContent className="p-6 space-y-6">

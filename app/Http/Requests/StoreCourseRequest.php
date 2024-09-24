@@ -29,7 +29,7 @@ class StoreCourseRequest extends FormRequest
             'course_code' => ['required', 'string', 'max:10'],
             'created_by' => ['required', 'integer', 'exists:users,id'],
             'updated_by' => ['required', 'integer', 'exists:users,id'],
-            'assigned_to' => ['required', 'integer', 'exists:users,id'],
+            'assigned_to' => ['null', 'integer', 'exists:users,id'],
         ];
     }
 }

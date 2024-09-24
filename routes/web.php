@@ -31,25 +31,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/user/data/{id}', function ($id) {
-        // $user = User::with(['courses.lessons'])->whereHas('courses.lessons')->findOrFail($id);
-        $user = User::with(['courses' => function ($query) use ($id) {
-            $query->with(['lessons' => function ($lessonQuery) use ($id) {
-                $lessonQuery->whereHas('users', function ($userQuery) use ($id) {
-                    $userQuery->where('user_id', $id);
-                });
-            }]);
-        }])->findOrFail($id);
-        return Inertia::render('User/showdata', [
-            'userData' => $user,
-        ]);
-    })->name('user.data');
-
     Route::resource('courses', CourseController::class);
     Route::resource('lessons', LessonController::class);
     Route::resource('quiz', QuizController::class);
 
     Route::post('/chat/completion', [ChatController::class, 'getChatCompletion']);
+
+    require __DIR__ . '/long.php';
 });
 
 require __DIR__ . '/auth.php';

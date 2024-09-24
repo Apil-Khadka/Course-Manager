@@ -1,21 +1,20 @@
-import LessonCreate from "@/components/lesson-create";
+import CourseEdit from "@/components/Course-edit";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
+import { Head } from "@inertiajs/react";
 
-export default function Lesson({
-    auth,
-    course_id,
-}: PageProps<{ course_id: number }>) {
+export default function Course({ auth, course }: PageProps<{ course: any }>) {
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Create Lesson
+                    {course.data.title}
                 </h2>
             }
         >
-            <LessonCreate />
+            <Head title="Edit Lesson" />
+            <CourseEdit />
         </AuthenticatedLayout>
     );
 }

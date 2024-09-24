@@ -24,7 +24,7 @@ class UpdateCourseRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'course_code' => ['required', 'string', 'max:10'],
+            'course_code' => ['null', 'string', 'max:10'],
             'updated_by' => ['required', 'integer', 'exists:users,id'],
             'assigned_to' => ['null', 'integer', 'exists:users,id'],
         ];
