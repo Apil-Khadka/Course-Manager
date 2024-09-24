@@ -41,7 +41,6 @@
         "clsx": "^2.1.1",
         "deep-chat-react": "^2.0.1",
         "dompurify": "^3.1.6",
-        "groq-sdk": "^0.7.0",
         "lucide-react": "^0.438.0",
         "react-quill": "^2.0.0",
         "slate-react": "^0.110.0",
