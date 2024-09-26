@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,7 +24,7 @@ Route::get('/user/data/{id}', function ($id) {
         // Retrieve data for the authenticated user
         $user = User::with(['courses' => function ($query) use ($id) {
             $query->with(['lessons' => function ($lessonQuery) use ($id) {
-                $lessonQuery->whereHas('users', function ($userQuery) use ($id) {
+                $lessonQuery->whereHas('assigned_to', function ($userQuery) use ($id) {
                     $userQuery->where('user_id', $id);
                 });
             }]);
@@ -33,5 +35,19 @@ Route::get('/user/data/{id}', function ($id) {
         'userData' => $user,
     ]);
 })->name('user.data');
+
+Route::post('/assign/courses/{id}', function ($id) {
+    $user = auth()->user();
+    $course = Course::findOrFail($id);
+    $course->assigned_to()->attach($user->id);
+    return back();
+})->name('assign.courses');
+
+Route::post('/assign/lessons/{id}', function ($id) {
+    $user = auth()->user();
+    $lesson = Lesson::findorFail($id);
+    $lesson->assigned_to()->attach($user->id);
+    return back();
+})->name('assign.lessons');
 
 ?>

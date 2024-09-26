@@ -20,10 +20,11 @@ class LessonResource extends JsonResource
             'content' => $this->content,
             'video_url' => $this->video_url,
             'course_id' => $this->course_id,
-            'created_by' => $this->when(auth()->user()->admin, $this->created_by),
-            'updated_by' => $this->when(auth()->user()->admin, $this->updated_by),
+            'created_by' => $this->when(auth()->user()->admin, optional($this->created_by)->name),
+            'updated_by' => $this->when(auth()->user()->admin, optional($this->updated_by)->name),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'assigned_to' => $this->whenLoaded('assigned_to'),
         ];
     }
 }

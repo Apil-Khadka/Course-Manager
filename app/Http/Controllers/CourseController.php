@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
+use App\Models\Lesson;
 
 class CourseController extends Controller
 {
@@ -14,8 +15,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $query = Course::query();
-        $courses = $query->paginate(10);
+        $query = Course::query()->with(['assigned_to' => fn($query) => $query->select('user_id')]);
+        $courses = $query->paginate(12);
 
         return inertia('Course/index', [
             'courses' => CourseResource::collection($courses),
@@ -63,7 +64,15 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::with('lessons', 'assigned_to')->findOrFail($id);
+        $course = Course::with([
+            'lessons' => function ($query) {
+                $query
+                    ->select('id', 'title', 'course_id')  // Select required fields from lessons
+                    ->with(['assigned_to' => function ($query) {
+                        $query->select('user_id');  // Only select user_id from pivot (lesson_user)
+                    }]);
+            }
+        ])->findOrFail($id);
         return inertia('Course/show', [
             'course' => new CourseResource($course),
         ]);

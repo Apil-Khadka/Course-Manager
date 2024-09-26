@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/chat/completion', [ChatController::class, 'getChatCompletion']);
 
     require __DIR__ . '/long.php';
+    require __DIR__ . '/data.php';
 });
 
 require __DIR__ . '/auth.php';

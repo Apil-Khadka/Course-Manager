@@ -12,12 +12,12 @@ class Lesson extends Model
     // create fillable
     protected $fillable = ['title', 'content', 'video_url', 'course_id', 'created_by', 'updated_by'];
 
-    public function course()
+    public function courses()
     {
         return $this->belongsTo(Course::class);
     }
 
-    public function users()
+    public function assigned_to()
     {
         return $this
             ->belongsToMany(User::class, 'lesson_user')

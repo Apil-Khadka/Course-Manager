@@ -51,10 +51,10 @@ const LessonView: React.FC = () => {
                         >
                             <ArrowLeft className="w-6 h-6" />
                         </Link>
-                        <CardTitle className="text-3xl font-bold text-white">
+                        <CardTitle className="text-3xl flex justify-center text-center font-bold text-white">
                             {lesson.title}
                         </CardTitle>
-                        {auth.user.admin && (
+                        {auth.user.admin ? (
                             <Link
                                 href={route("lessons.edit", lesson.id)}
                                 className="text-black-200 hover:text-black-800 transition-colors duration-200"
@@ -66,7 +66,7 @@ const LessonView: React.FC = () => {
                                     route={route("lessons.destroy", lesson.id)}
                                 />
                             </Link>
-                        )}
+                        ) : null}
                     </div>
                 </CardHeader>
                 <CardContent className="p-6 space-y-6">

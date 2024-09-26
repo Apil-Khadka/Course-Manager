@@ -9,6 +9,7 @@ interface Lesson {
     id: number;
     title: string;
     description: string;
+    assigned_to: Assigned_to[];
 }
 
 interface Assigned_to {
@@ -16,10 +17,8 @@ interface Assigned_to {
     name: string;
     email: string;
     admin: boolean;
-    pivot: {
-        course_id: number;
-        user_id: number;
-    };
+    course_id: number;
+    user_id: number;
 }
 
 interface Course {
@@ -29,7 +28,6 @@ interface Course {
     course_code: string;
     created_by?: string;
     updated_by?: string;
-    assigned_to: Assigned_to[];
     created_at: string;
     updated_at: string;
     lessons: Lesson[];
@@ -53,6 +51,7 @@ const CourseDetails: React.FC = () => {
     const { course, auth } = usePage<PageProps>().props;
     const isAdmin = auth.user.admin;
     const courseData = course.data; // Accessing the actual course data
+    const user_id = auth.user.id;
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("en-US", {
@@ -69,7 +68,7 @@ const CourseDetails: React.FC = () => {
                     <CardTitle className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                         {courseData.title}
                     </CardTitle>
-                    {isAdmin && (
+                    {isAdmin ? (
                         <div className="space-x-2">
                             <Link href={route("courses.edit", courseData.id)}>
                                 <Button
@@ -96,7 +95,7 @@ const CourseDetails: React.FC = () => {
                                 </Button>
                             </Link>
                         </div>
-                    )}
+                    ) : null}
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -112,7 +111,7 @@ const CourseDetails: React.FC = () => {
                                 <strong>Description:</strong>{" "}
                                 {courseData.description}
                             </p>
-                            {isAdmin && (
+                            {/* {isAdmin ? (
                                 <p className="text-gray-600 dark:text-gray-400">
                                     <strong>Assigned To:</strong>{" "}
                                     {courseData.assigned_to.length > 0 ? (
@@ -150,7 +149,7 @@ const CourseDetails: React.FC = () => {
                                         <p>Not assigned to any user</p>
                                     )}
                                 </p>
-                            )}
+                            ) : null} */}
                         </div>
                         <div>
                             <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
@@ -164,18 +163,18 @@ const CourseDetails: React.FC = () => {
                                 <strong>Updated At:</strong>{" "}
                                 {formatDate(courseData.updated_at)}
                             </p>
-                            {isAdmin && courseData.created_by && (
-                                <p className="text-gray-600 dark:text-gray-400">
-                                    <strong>Created By:</strong>{" "}
-                                    {courseData.created_by}
-                                </p>
-                            )}
-                            {isAdmin && courseData.updated_by && (
-                                <p className="text-gray-600 dark:text-gray-400">
-                                    <strong>Updated By:</strong>{" "}
-                                    {courseData.updated_by}
-                                </p>
-                            )}
+                            {isAdmin ? (
+                                <>
+                                    <p className="text-gray-600 dark:text-gray-400">
+                                        <strong>Created By:</strong>{" "}
+                                        {courseData.created_by}
+                                    </p>
+                                    <p className="text-gray-600 dark:text-gray-400">
+                                        <strong>Updated By:</strong>{" "}
+                                        {courseData.updated_by}
+                                    </p>
+                                </>
+                            ) : null}
                         </div>
                     </div>
                     <div>
@@ -183,7 +182,7 @@ const CourseDetails: React.FC = () => {
                             <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
                                 Lessons
                             </h3>
-                            {isAdmin && (
+                            {isAdmin ? (
                                 <Link
                                     href={route("lessons.create")}
                                     data={{ course_id: courseData.id }}
@@ -192,7 +191,7 @@ const CourseDetails: React.FC = () => {
                                     <PlusCircle className="w-5 h-5 mr-2" />
                                     Create lesson
                                 </Link>
-                            )}
+                            ) : null}
                         </div>
                         {courseData.lessons.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -220,6 +219,32 @@ const CourseDetails: React.FC = () => {
                                                 <Book className="w-4 h-4 mr-1" />
                                                 View Lesson
                                             </Link>
+                                            {lesson.assigned_to.some(
+                                                (assigned) =>
+                                                    assigned.user_id ===
+                                                    user_id,
+                                            ) ? (
+                                                <span className="text-green-500">
+                                                    Assigned
+                                                </span>
+                                            ) : (
+                                                <Link
+                                                    href={route(
+                                                        "assign.lessons",
+                                                        lesson.id,
+                                                    )}
+                                                    method="post"
+                                                    as="button"
+                                                >
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        className="flex items-center"
+                                                    >
+                                                        Assign Lesson
+                                                    </Button>
+                                                </Link>
+                                            )}
                                         </CardContent>
                                     </Card>
                                 ))}
