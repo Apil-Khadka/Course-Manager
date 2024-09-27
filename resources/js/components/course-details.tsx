@@ -206,9 +206,6 @@ const CourseDetails: React.FC = () => {
                                             </CardTitle>
                                         </CardHeader>
                                         <CardContent>
-                                            <p className="text-gray-600 dark:text-gray-400">
-                                                {lesson.description}
-                                            </p>
                                             <Link
                                                 href={route(
                                                     "lessons.show",
@@ -219,6 +216,8 @@ const CourseDetails: React.FC = () => {
                                                 <Book className="w-4 h-4 mr-1" />
                                                 View Lesson
                                             </Link>
+                                        </CardContent>
+                                        <div className="px-4 py-2 pb-3 bg-gray-50 dark:bg-gray-500 flex justify-end items-center space-x-2">
                                             {lesson.assigned_to.some(
                                                 (assigned) =>
                                                     assigned.user_id ===
@@ -245,7 +244,7 @@ const CourseDetails: React.FC = () => {
                                                     </Button>
                                                 </Link>
                                             )}
-                                        </CardContent>
+                                        </div>
                                     </Card>
                                 ))}
                             </div>
