@@ -30,14 +30,9 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --prefer-dist --no-progress
-      # If install fails due to lock file incompatibility, update composer.lock
-      continue-on-error: true
-
-    - name: Run composer update if install fails
-      if: failure()
-      run: composer update -q --no-ansi --no-interaction --prefer-dist --no-progress
-
+      run: |
+        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist || (echo "composer install failed. Running composer update..." && composer update -q --no-ansi --no-interaction --prefer-dist --no-progress)
+    
     - name: Generate key
       run: php artisan key:generate
 
