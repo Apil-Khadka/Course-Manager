@@ -9,13 +9,24 @@ class Question extends Model
 {
     use HasFactory;
 
-    public function lesson()
+    protected $fillable = [
+        'title',
+        'description',
+        'quiz_id',
+    ];
+
+    public function Quizzes()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(Quiz::class);
     }
 
     public function options()
     {
         return $this->hasMany(Option::class);
+    }
+
+    public function attempts()
+    {
+        return $this->hasMany(Attempt::class);
     }
 }

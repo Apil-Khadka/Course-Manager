@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    // Example log entry
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'admin'
     ];
 
     /**
@@ -65,5 +68,10 @@ class User extends Authenticatable
         return $this
             ->belongsToMany(Lesson::class, 'lesson_user')
             ->withTimestamps();
+    }
+
+    public function attempts()
+    {
+        return $this->hasMany(Attempt::class);
     }
 }

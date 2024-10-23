@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLessonRequest;
 use App\Http\Requests\UpdateLessonRequest;
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -16,8 +17,8 @@ class LessonController extends Controller
      */
     public function index()
     {
-        $lessons = Lesson::all();
-        return LessonResource::collection($lessons);
+        // $lessons = Lesson::all();
+        // return LessonResource::collection($lessons);
     }
 
     /**

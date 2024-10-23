@@ -23,8 +23,9 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             //
-            'question' => ['required', 'string'],
-            'quiz_id' => ['required', 'integer', 'exists:quizzes,id'],
+            'title' => ['required', 'string'],
+            // 'quiz_id' => ['required', 'integer', 'exists:quizzes,id'],
+            'options' => StoreOptionRequest::class,
         ];
     }
 }

@@ -11,7 +11,7 @@ class UpdateQuizRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->admin;
     }
 
     /**
@@ -23,6 +23,9 @@ class UpdateQuizRequest extends FormRequest
     {
         return [
             //
+            'title' => ['string', 'max:255'],
+            'description' => ['string'],
+            // 'questions' => StoreQuestionRequest::class,
         ];
     }
 }

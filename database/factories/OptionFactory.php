@@ -17,10 +17,13 @@ class OptionFactory extends Factory
      */
     public function definition(): array
     {
+        $correct = $this->faker->boolean;
+
         return [
             //
-            'correct' => $this->faker->boolean,
-            'option' => $this->faker->sentence,
+            'title' => $this->faker->sentence,
+            'correct' => $correct,
+            'description' => $correct ? $this->faker->sentence : null,
             'question_id' => $this->faker->numberBetween(1, 400),
         ];
     }

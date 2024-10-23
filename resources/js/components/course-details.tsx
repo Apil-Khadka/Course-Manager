@@ -2,7 +2,7 @@ import React from "react";
 import { usePage, Link } from "@inertiajs/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2, Book, PlusCircle } from "lucide-react";
+import { Edit, Trash2, Book, PlusCircle, ArrowLeft } from "lucide-react";
 import { PageProps as InertiaPageProps } from "@/types";
 
 interface Lesson {
@@ -53,6 +53,9 @@ const CourseDetails: React.FC = () => {
     const courseData = course.data; // Accessing the actual course data
     const user_id = auth.user.id;
 
+    const queryParams = new URLSearchParams(window.location.search);
+    const previousPage = queryParams.get("page") || 1;
+
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("en-US", {
             year: "numeric",
@@ -65,6 +68,14 @@ const CourseDetails: React.FC = () => {
         <div className="container mx-auto px-4 py-8 bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-200">
             <Card className="bg-white dark:bg-gray-800 shadow-lg transition-colors duration-200">
                 <CardHeader className="flex flex-row justify-between items-center">
+                    <Link
+                        href={`${route("courses.index")}?page=${previousPage}`}
+                        className="text-blue bg-gradient-to-br hover:text-gray-200 transition-colors duration-200"
+                    >
+                        <ArrowLeft className="w-6 h-6 text-green-200  hover:text-green-800" />
+                        Back to Courses List
+                    </Link>
+
                     <CardTitle className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                         {courseData.title}
                     </CardTitle>
@@ -152,9 +163,6 @@ const CourseDetails: React.FC = () => {
                             ) : null} */}
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">
-                                Additional Information
-                            </h3>
                             <p className="text-gray-600 dark:text-gray-400">
                                 <strong>Created At:</strong>{" "}
                                 {formatDate(courseData.created_at)}
@@ -163,18 +171,16 @@ const CourseDetails: React.FC = () => {
                                 <strong>Updated At:</strong>{" "}
                                 {formatDate(courseData.updated_at)}
                             </p>
-                            {isAdmin ? (
-                                <>
-                                    <p className="text-gray-600 dark:text-gray-400">
-                                        <strong>Created By:</strong>{" "}
-                                        {courseData.created_by}
-                                    </p>
-                                    <p className="text-gray-600 dark:text-gray-400">
-                                        <strong>Updated By:</strong>{" "}
-                                        {courseData.updated_by}
-                                    </p>
-                                </>
-                            ) : null}
+                            <>
+                                <p className="text-gray-600 dark:text-gray-400">
+                                    <strong>Created By:</strong>{" "}
+                                    {courseData.created_by}
+                                </p>
+                                <p className="text-gray-600 dark:text-gray-400">
+                                    <strong>Updated By:</strong>{" "}
+                                    {courseData.updated_by}
+                                </p>
+                            </>
                         </div>
                     </div>
                     <div>
@@ -240,7 +246,7 @@ const CourseDetails: React.FC = () => {
                                                         size="sm"
                                                         className="flex items-center"
                                                     >
-                                                        Assign Lesson
+                                                        Assign Lesson Completed
                                                     </Button>
                                                 </Link>
                                             )}

@@ -44,7 +44,7 @@ export default function EnhancedElegantChatComponent() {
 
         try {
             setIsTyping(true);
-            const response = await axios.post("/chat/completion", {
+            const response = await axios.post(route("chat.completion"), {
                 message: userInput,
             });
             setIsTyping(false);

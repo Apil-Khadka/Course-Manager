@@ -23,8 +23,8 @@ class StoreOptionRequest extends FormRequest
     {
         return [
             //
-            'question_id' => ['required', 'integer', 'exists:questions,id'],
-            'option' => ['required', 'string'],
+            // 'question_id' => ['required', 'integer', 'exists:questions,id'],
+            'title' => ['required', 'string'],
             'correct' => ['required', 'boolean'],
         ];
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\User;
@@ -49,5 +50,13 @@ Route::post('/assign/lessons/{id}', function ($id) {
     $lesson->assigned_to()->attach($user->id);
     return back();
 })->name('assign.lessons');
+
+// Route::patch('/profile/toggle', [ProfileController::class, 'toggleAdmin'])->name('profile.toggle');
+Route::patch('/profile/toggle', function () {
+    $user = auth()->user();
+    $user->admin = !$user->admin;
+    $user->save();
+    return back()->with('status', 'Admin status updated successfully.');
+})->name('profile.toggle');
 
 ?>

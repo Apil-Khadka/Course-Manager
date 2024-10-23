@@ -20,7 +20,7 @@ class QuizFactory extends Factory
         return [
             //
             'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->sentence,
             'lesson_id' => $this->faker->numberBetween(1, 100),
         ];
     }

@@ -14,6 +14,8 @@ class QuestionController extends Controller
     public function index()
     {
         //
+        $question = Question::all();
+        return QuestionResource::collection($question);
     }
 
     /**

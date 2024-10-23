@@ -6,6 +6,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
 import DarkModeToggle from "@/components/dark-mode-toggle";
+import AdminToggle from "@/Pages/Profile/Partials/AdminToogle";
 
 export default function Authenticated({
     user,
@@ -86,6 +87,7 @@ export default function Authenticated({
                                         >
                                             Log Out
                                         </Dropdown.Link>
+                                        <AdminToggle isAdmin={user.admin} />
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
@@ -147,6 +149,12 @@ export default function Authenticated({
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        <NavLink
+                            href={route("courses.index")}
+                            active={route().current("courses.index")}
+                        >
+                            Courses
+                        </NavLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
@@ -170,6 +178,7 @@ export default function Authenticated({
                             >
                                 Log Out
                             </ResponsiveNavLink>
+                            <AdminToggle isAdmin={user.admin} />
                         </div>
                     </div>
                 </div>

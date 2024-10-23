@@ -20,8 +20,10 @@ class CourseResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'course_code' => $this->course_code,
-            'created_by' => $this->when(auth()->user()->admin, optional($this->createdBy)->name),
-            'updated_by' => $this->when(auth()->user()->admin, optional($this->updatedBy)->name),
+            /* 'created_by' => $this->when(auth()->user()->admin, auth()->user($this->created_by)->name),
+            'updated_by' => $this->when(auth()->user()->admin, auth()->user($this->updated_by)->name), */
+            'created_by' => $this->createdBy ? $this->createdBy->name : null,
+            'updated_by' => $this->updatedBy ? $this->updatedBy->name : null,
             'assigned_to' => $this->whenLoaded('assigned_to'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

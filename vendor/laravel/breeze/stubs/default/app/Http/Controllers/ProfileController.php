@@ -21,6 +21,15 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function toggleAdmin(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+        $user->admin = !$user->admin;  // Toggle the admin status
+        $user->save();
+
+        return back()->with('status', 'Admin status updated successfully.');
+    }
+
     /**
      * Update the user's profile information.
      */

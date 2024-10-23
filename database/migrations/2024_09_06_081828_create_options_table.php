@@ -12,8 +12,9 @@ return new class extends Migration {
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->string('option');
+            $table->string('title');
             $table->boolean('correct');
+            $table->string('description')->nullable();
             $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
             $table->timestamps();
         });

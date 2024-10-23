@@ -35,10 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('lessons', LessonController::class);
     Route::resource('quiz', QuizController::class);
 
-    Route::post('/chat/completion', [ChatController::class, 'getChatCompletion']);
+    Route::post('/chat/completion', [ChatController::class, 'getChatCompletion'])->name('chat.completion');
+    Route::post('/quizzes/submit-answer', [QuizController::class, 'submitAnswer'])->name('quiz.submit-answer');
+    Route::post('/quizzes/complete', [QuizController::class, 'completeQuiz'])->name('quiz.complete');
 
     require __DIR__ . '/long.php';
-    require __DIR__ . '/data.php';
 });
 
 require __DIR__ . '/auth.php';

@@ -23,11 +23,15 @@ interface PageProps extends InertiaPageProps {
 // CourseCard component
 const CourseCard: React.FC<{
     course: Course;
+    currentPage: number;
     isAdmin: boolean;
     user_id: number;
-}> = ({ course, isAdmin, user_id }) => (
+}> = ({ course, currentPage, isAdmin, user_id }) => (
     <Card className="w-full max-w-sm bg-white pb-10 dark:bg-gray-800 shadow-lg transition-colors duration-200 hover:shadow-xl">
-        <Link href={route("courses.show", course.id)} className="block h-full">
+        <Link
+            href={`${route("courses.show", course.id)}?page=${currentPage}`}
+            className="block h-full"
+        >
             <CardHeader>
                 <CardTitle className="text-gray-800 dark:text-gray-100">
                     {course.title}
@@ -55,7 +59,7 @@ const CourseCard: React.FC<{
                         size="sm"
                         className="flex items-center"
                     >
-                        Assign Course
+                        Assign Course Completed
                     </Button>
                 </Link>
             )}
@@ -89,8 +93,6 @@ const CourseList: React.FC = () => {
     const isAdmin = auth.user.admin;
     const user_id = auth.user.id;
 
-    console.log("Courses:", courses);
-
     return (
         <div className="container mx-auto px-4 py-8 bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-200">
             <div className="flex justify-between items-center mb-6">
@@ -114,6 +116,7 @@ const CourseList: React.FC = () => {
                             <CourseCard
                                 key={course.id}
                                 course={course}
+                                currentPage={courses.meta.current_page}
                                 isAdmin={isAdmin}
                                 user_id={user_id}
                             />

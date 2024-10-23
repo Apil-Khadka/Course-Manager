@@ -6,7 +6,6 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
-use App\Models\Lesson;
 
 class CourseController extends Controller
 {

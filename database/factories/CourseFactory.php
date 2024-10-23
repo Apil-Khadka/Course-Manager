@@ -20,7 +20,7 @@ class CourseFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'course_code' => $this->faker->unique()->word,
+            'course_code' => $this->faker->unique()->lexify('?????'),
             'created_by' => 1,
             'updated_by' => 1,
         ];

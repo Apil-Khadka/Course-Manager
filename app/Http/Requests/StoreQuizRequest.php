@@ -26,6 +26,7 @@ class StoreQuizRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'lesson_id' => ['required', 'integer', 'exists:lessons,id'],
+            // 'questions' => StoreQuestionRequest::class,
         ];
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('description')->nullable();
             $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
             $table->timestamps();
+            $table->unique('lesson_id');
         });
     }
 

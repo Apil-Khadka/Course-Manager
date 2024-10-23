@@ -9,7 +9,13 @@ class Quiz extends Model
 {
     use HasFactory;
 
-    public function lesson()
+    protected $fillable = [
+        'title',
+        'description',
+        'lesson_id',
+    ];
+
+    public function lessons()
     {
         return $this->belongsTo(Lesson::class);
     }
@@ -30,5 +36,10 @@ class Quiz extends Model
             ->belongsToMany(User::class, 'results')
             ->withPivot('score', 'question_count', 'lesson_id')
             ->withTimestamps();
+    }
+
+    public function attempts()
+    {
+        return $this->hasMany(Attempt::class);
     }
 }

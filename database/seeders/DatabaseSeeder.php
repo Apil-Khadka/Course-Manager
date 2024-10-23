@@ -2,8 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attempt;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Option;
+use App\Models\Question;
+use App\Models\Quiz;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,29 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        /*
-         * User::factory()->create([
-         *     'name' => 'God Win',
-         *     'email' => 'godwin@example.com',
-         *     'password' => bcrypt('YouGotGuts'),
-         *     'admin' => true,
-         * ]);
-         * $this->call(CourseSeeder::class);
-         * User::factory(100)->create();
-         * $this->call([
-         *     // CourseSeeder::class,
-         *     LessonSeeder::class,
-         *     QuizSeeder::class,
-         *     QuestionSeeder::class,
-         *     OptionSeeder::class,
-         *     ResultSeeder::class
-         * ]);
-         *
-         * User::factory()->create()->courses()->attach(Course::all()->random(100));
-         * User::factory()->create()->lessons()->attach(Course::all()->random(100));
-         */
         $this->createAdminUser();
         $this->createCoursesAndLessons();
         $this->attachUsersToCoursesAndLessons();
@@ -67,6 +48,25 @@ class DatabaseSeeder extends Seeder
         foreach ($courses as $course) {
             $lessons = Lesson::factory(10)->make();  // Create lessons without saving
             $course->lessons()->saveMany($lessons);  // Efficiently save lessons associated with the course
+
+            foreach ($lessons as $lesson) {
+                // Create a quiz for each lesson
+                $quiz = Quiz::factory()->create(['lesson_id' => $lesson->id]);
+
+                // Create 6 questions for the quiz
+                for ($i = 0; $i < 6; $i++) {
+                    $question = Question::factory()->create(['quiz_id' => $quiz->id]);
+
+                    // Create 4 options for each question, with one correct option
+                    $correctOptionIndex = rand(0, 3);
+                    for ($j = 0; $j < 4; $j++) {
+                        Option::factory()->create([
+                            'question_id' => $question->id,
+                            'correct' => ($j === $correctOptionIndex) ? 1 : 0,
+                        ]);
+                    }
+                }
+            }
         }
     }
 
@@ -81,7 +81,6 @@ class DatabaseSeeder extends Seeder
 
             // For each course attached to the user, attach some random lessons from that course
             foreach ($attachedCourses as $course) {
-                // Fetch lessons from the course as a collection
                 $lessons = $course->lessons()->get();
 
                 // Pick random lessons from the course (1 to the number of lessons in the course)
@@ -95,11 +94,8 @@ class DatabaseSeeder extends Seeder
 
     private function createOtherModels(): void
     {
-        // Call seeders for quizzes, questions, options, results, etc.
+        // Call other seeders for results, etc.
         $this->call([
-            QuizSeeder::class,
-            QuestionSeeder::class,
-            OptionSeeder::class,
             ResultSeeder::class,
         ]);
     }

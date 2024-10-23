@@ -19,7 +19,7 @@ class QuestionFactory extends Factory
     {
         return [
             //
-            'question' => $this->faker->sentence(),
+            'title' => $this->faker->sentence(),
             'quiz_id' => $this->faker->numberBetween(1, 200),
         ];
     }
